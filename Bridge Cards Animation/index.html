@@ -1,0 +1,61 @@
+<!DOCTYPE html><html><body><center><canvas id="canvas" style="padding:0px 80px 0px 80px;"></canvas></center></body></html>
+
+<script type="text/javascript">
+var fps=80;
+var field={width:800, height:600};
+
+var xpat=[1,1,0,-1,-1,-1,0,1];
+var ypat=[0,1,1,1,0,-1,-1,-1];
+
+var all=new Image();
+all.src="All.png";
+
+var card=[];
+
+for(i=1; i<14; i++){
+	card[i]={pic:new Image(), x:220, y:90, xdir:xpat[(i-1)%8], ydir:ypat[(i-1)%8]}
+	card[i].pic.src=""+i+".png";
+}
+
+var canvas = document.getElementById("canvas"),
+    ctx = canvas.getContext("2d");
+
+canvas.width = field.width;
+canvas.height = field.height;
+
+var time=0;
+var b=65;
+var speed=9;
+
+function frame(){
+
+	ctx.fillStyle="black";
+	ctx.fillRect(0, 0, field.width, field.height);
+
+	ctx.drawImage(all, 220, 90);
+
+	for(i=13; i>0; i--){
+		if(time>(i-1)*b && time <i*b){
+			card[i].x+=card[i].xdir*speed;
+			card[i].y+=card[i].ydir*speed;
+		}
+		ctx.drawImage(card[i].pic, card[i].x, card[i].y);
+	}
+
+	time++;
+
+	if(time==13*b){
+		time=0;
+		for(i=1; i<14; i++){
+			card[i].x=220;
+			card[i].y=90;
+		}
+	}
+
+	setTimeout(frame,1000/fps);
+
+}
+
+frame();
+
+</script>

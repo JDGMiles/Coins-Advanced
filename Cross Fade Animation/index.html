@@ -1,0 +1,54 @@
+<!DOCTYPE html><html><body><center><canvas id="canvas" style="padding:0px 80px 0px 80px;"></canvas></center></body></html>
+
+<script type="text/javascript">
+var fps=80;
+var field={width:800, height:600};
+
+var g1=new Image();
+g1.src="../Pilotwings64.png";
+
+var g2=new Image();
+g2.src="../Zelda.png";
+
+var g3=new Image();
+g3.src="../Blastdozer.png";
+
+var canvas = document.getElementById("canvas"),
+    ctx = canvas.getContext("2d");
+
+canvas.width = field.width;
+canvas.height = field.height;
+
+var time=0;
+var period=210;
+var freezecount=0;
+var freeze=150;
+
+function frame(){
+
+	ctx.fillStyle="black";
+	ctx.fillRect(0, 0, field.width, field.height);
+
+	ctx.globalAlpha = 1;
+	ctx.drawImage(g1, 2, 2, 493, 405);
+
+	ctx.globalAlpha = time/(period/3);
+	ctx.drawImage(g2, 2, 2, 493, 405);
+
+	if(time>period/3){ctx.globalAlpha = (time/(period/3))-1; ctx.drawImage(g3, 2, 2, 493, 405);}
+
+	if(time>2*period/3){ctx.globalAlpha = (time/(period/3))-2; ctx.drawImage(g1, 2, 2, 493, 405);}
+
+	if(freezecount==freeze){time++; freezecount=0;}
+	if(time%(period/3)==0){freezecount++;}
+	else{time++;}
+
+	if(time==period){time=0;}
+
+	setTimeout(frame,1000/fps);
+
+}
+
+frame();
+
+</script>
