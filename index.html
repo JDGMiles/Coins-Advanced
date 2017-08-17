@@ -51,10 +51,16 @@ var time=0;
 var maxtime=8;
 var fps=60;
 
+var clickrecord='';
+var password='024681012141618202224262830191725311192751321297152331';
+
 function flip(clickedcoin){
   coinstate[clickedcoin].side=(coinstate[clickedcoin].side+1)%coinfaces[clickedcoin].length;
   coinstate[clickedcoin].flipping=1;
   coinstate[clickedcoin].t=time;
+  clickrecord=clickrecord+clickedcoin;
+  if(clickrecord.length>password.length){clickrecord=clickrecord.substring(clickrecord.length-password.length,clickrecord.length)}
+  if(clickrecord==password){window.location.href='../Coins-Seasonal/index.html';}
 }
 
 function progressframe(){
